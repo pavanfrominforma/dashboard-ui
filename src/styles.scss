@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+
+
+html, body{
+    max-width: 100vw;
+    min-width: 100vw;
+    background-color: #e6e6e6 !important;
+    font-family: 'Rubik', 'Helvetica', sans-serif !important;
+    color: rgb(44, 44, 44)646 !important;
+}
+
+.drop-shadow {
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%) !important;
+}
+
+.color-title{
+    color: #2E3646 !important;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: #2E3646 !important;
+    font-family: 'Rubik', 'Helvetica', sans-serif !important;
+}
+
+p, td, th, table{
+    font-family: 'Rubik', 'Helvetica', sans-serif !important;
+    color: rgb(58, 58, 58)646 !important;
+
+}
+.text-light-1{
+    color: #F8F8F8 !important;
+}
+
+input{
+    color: #2E3646 !important;
+}
+
+.card{
+
+    border-radius: 0 !important;
+    border: 0px !important;
+    
+}
