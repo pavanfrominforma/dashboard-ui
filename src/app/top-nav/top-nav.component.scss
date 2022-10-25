@@ -1,0 +1,24 @@
+.navbar-fixed{
+    position: fixed;
+    width: 100%;
+}
+
+.color-light-2{
+    color: #595c637e !important;
+}
+
+.form-control::placeholder{
+    color: #595c637e !important;
+}
+
+.form-control:-moz-placeholder, .form-control::-webkit-input-placeholder{
+    color: #595c637e !important;
+}
+
+.form-control::placeholder::focus{
+    color: #2E3646;
+}
+
+.bg-light{
+    background-color: #e7e7e7 !important;
+}
