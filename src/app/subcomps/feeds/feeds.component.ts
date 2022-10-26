@@ -43,7 +43,6 @@ export class FeedsComponent implements OnInit {
     }
 
     paginate(pageNumber: number) {
-        console.log("Page number ", pageNumber);
 
         pageNumber = Math.max(pageNumber, 0);
         pageNumber = Math.min(pageNumber, this.pagination.totalPages - 1);
@@ -53,7 +52,6 @@ export class FeedsComponent implements OnInit {
         let endIndex =
             pageNumber * this.pagination.maxRecordsPerPage +
             this.pagination.maxRecordsPerPage;
-        console.log(startIndex, " ==> ", endIndex);
         this.data = this.overallData.slice(startIndex, endIndex);
     }
 
