@@ -35,7 +35,13 @@
         <div class="px-3 py-3 bg-white drop-shadow">
             <h4>VDP - Vessels</h4>
             <div class=" max-width overflow-scroll">
-            <table class="table table-striped">
+            <div class="d-flex flex-row py-4 justify-content-center" *ngIf="isLoading">
+              <div class="spinner-border text-secondary" role="status" style="display: block">
+                <span class="sr-only">Loading...</span>
+              </div>  
+            </div>
+            
+            <table class="table table-striped" *ngIf="!isLoading">
                 <thead>
                   <tr>
                     <th scope="col" *ngFor="let header of headers" class="min sticky-column py-3 px-3">{{header.name}}</th>
@@ -43,8 +49,10 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let record of data">
-                    <td *ngFor="let header of headers" class="min py-3 px-3 sticky-column" 
-                      [ngClass]="{'text-success': header.field.toLowerCase().indexOf('status') > -1, 'text-danger': header.field.toLowerCase().indexOf('status') > -1}">{{record[header.field]}}</td>
+                    <td *ngFor="let header of headers" class="min py-2 px-3 sticky-column"
+                      [title]="record[header.field]"
+                      [ngClass]="{'color-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') > -1, 
+                      'color-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') == -1}">{{record[header.field]}}</td>
                   </tr>
                 </tbody>
               </table>  
@@ -52,7 +60,26 @@
         </div>
     </div>
 </div>
-<div class="row d-flex">
-    <div class="col-12 flex-reverse">welcome</div>
+<div class="mt-3 d-flex  flex-row justify-content-end " *ngIf="pagination.maxRecordsPerPage <= pagination.totalCount && !isLoading">
+    
+  <div class="p-2 mx-2 text-secondary">
+    {{pagination.pageNumber + 1}} / {{pagination.totalPages}}
+  </div>
+  <nav >
+      <ul class="pagination">
+        <li class="page-item drop-shadow">
+          <a class="page-link" (click)="paginate(pagination.pageNumber - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item drop-shadow">
+          <a class="page-link" (click)="paginate(pagination.pageNumber + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
 </div>
 
