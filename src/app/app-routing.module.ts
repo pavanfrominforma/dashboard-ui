@@ -6,17 +6,16 @@ import { FeedsComponent } from './subcomps/feeds/feeds.component';
 
 const routes: Routes = [
   {
-      path:"", component: MainPageComponent, 
-      children: [
-        { path: "vdp", children: [
-           { path: "feeds", component:  FeedsComponent }
-        ]}
-      ]
+    path: '',
+    component: MainPageComponent,
+    children: [
+      { path: 'vdp', children: [{ path: 'feeds', component: FeedsComponent }] },
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
