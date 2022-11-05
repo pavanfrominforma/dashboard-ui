@@ -21,7 +21,7 @@ export class FeedsComponent implements OnInit {
         totalPages: 0,
     };
 
-    
+    feedType: string;
     feedCounts: any[];
     isFeedCountLoading: boolean = false;
 
@@ -37,13 +37,21 @@ export class FeedsComponent implements OnInit {
         this.data = [];
         this.feedCounts = [];
         this.filters = {};
+
+        this.activeRoute.params.subscribe({
+            next: (params: any) => {
+                const feedtype =
+                    this.activeRoute.snapshot.paramMap.get("feedtype");
+                this.feedType = feedtype;
+                this.filters = { FEEDTYPE: feedtype };
+                this.loadFeedsData();
+                this.bringFeedCountToFront();
+            },
+        });
     }
 
     ngOnInit(): void {
-        const feedtype = this.activeRoute.snapshot.paramMap.get('feedtype');
-        this.filters = {"FEEDTYPE": feedtype};
         this.loadFeedsCount();
-        this.loadFeedsData();
     }
 
     loadFeedsCount() {
@@ -90,6 +98,22 @@ export class FeedsComponent implements OnInit {
         this.data = this.overallData.slice(startIndex, endIndex);
     }
 
+    bringFeedCountToFront() {
+        console.log("Finding feeds ", this.feedType);
+        let index = -1;
+        console.log("CNTS ", this.feedCounts);
+        const actualFeed = this.feedCounts.filter((feed: any, idx: number) => {
+            const isValid = this.feedType == feed.feedtype;
+            if (isValid) index = idx;
+            return isValid;
+        });
+        if (actualFeed.length > 0) {
+            const feed = actualFeed[0];
+            console.log("Splice ", this.feedCounts.splice(index, 1));
+            this.feedCounts = [feed, ...this.feedCounts];
+            console.log("Con ", this.feedCounts);
+        }
+    }
     modifyHeadersPosition(headers: any[]) {
         headers = headers.filter((header: any) => header.show);
         return headers.sort((a: any, b: any) => a.position - b.position);
