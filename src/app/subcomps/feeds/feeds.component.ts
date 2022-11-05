@@ -15,18 +15,24 @@ export class FeedsComponent implements OnInit {
     pagination: any = {
         pageNumber: 0,
         totalCount: 100,
-        maxRecordsPerPage: 10,
+        maxRecordsPerPage: 50,
         totalPages: 0,
     };
+
+    feedCounts: any[];
+    isFeedCountLoading: boolean;
 
     constructor(private apiService: ApiService) {
         this.overallData = [];
         this.headers = [];
         this.data = [];
+        this.feedCounts = [];
+        this.isFeedCountLoading = false;
     }
 
     ngOnInit(): void {
         this.isLoading = true;
+        this.isFeedCountLoading = true;
         this.apiService.getVdpFeeds().subscribe({
             next: (response: any) => {
                 this.headers = this.modifyHeadersPosition(response.headers);
@@ -40,10 +46,17 @@ export class FeedsComponent implements OnInit {
             },
             complete: () => (this.isLoading = false),
         });
+
+        this.apiService.getVdpFeedsCount().subscribe({
+            next: (response: any) => {
+                this.feedCounts = response;
+                this.isFeedCountLoading = false;
+            },
+            complete: () => (this.isFeedCountLoading = false),
+        });
     }
 
     paginate(pageNumber: number) {
-
         pageNumber = Math.max(pageNumber, 0);
         pageNumber = Math.min(pageNumber, this.pagination.totalPages - 1);
         this.pagination.pageNumber = pageNumber;
@@ -56,22 +69,7 @@ export class FeedsComponent implements OnInit {
     }
 
     modifyHeadersPosition(headers: any[]) {
-        let positionMap = {} as any;
-        for (let header of headers) {
-            const key = header?.position || "";
-            if (!positionMap[key]) positionMap[key] = [];
-            positionMap[key].push(header);
-        }
-
-        let firsts = positionMap["first"] || [];
-        let lasts = positionMap["last"] || [];
-        delete positionMap["first"];
-        delete positionMap["last"];
-
-        let results = [...firsts];
-        for (let obj of Object.values(positionMap))
-            results = [...results, ...(obj as any)];
-
-        return [...results, ...lasts];
+        headers = headers.filter((header: any) => header.show);
+        return headers.sort((a: any, b: any) => a.position - b.position);
     }
 }
