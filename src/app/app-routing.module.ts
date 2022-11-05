@@ -11,7 +11,9 @@ const routes: Routes = [
         children: [
             {
                 path: "vdp",
-                children: [{ path: "feeds/:feedtype", component: FeedsComponent }],
+                children: [
+                    { path: "feeds/:feedtype", component: FeedsComponent },
+                ],
             },
         ],
     },
