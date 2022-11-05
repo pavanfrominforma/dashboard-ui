@@ -7,6 +7,7 @@ import { TopNavComponent } from "./top-nav/top-nav.component";
 import { SideNavComponent } from "./side-nav/side-nav.component";
 import { MainPageComponent } from "./main-page/main-page.component";
 import { FeedsComponent } from "./subcomps/feeds/feeds.component";
+import { FeedCountsSliderComponent } from "./subcomps/feed-counts-slider/feed-counts-slider.component";
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { FeedsComponent } from "./subcomps/feeds/feeds.component";
         SideNavComponent,
         MainPageComponent,
         FeedsComponent,
+        FeedCountsSliderComponent,
     ],
     imports: [BrowserModule, HttpClientModule, AppRoutingModule],
     providers: [],
