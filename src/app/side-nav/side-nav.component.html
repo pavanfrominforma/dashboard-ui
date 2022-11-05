@@ -31,9 +31,10 @@
 
         </a>
         <ul class="submenu collapse" >
-          <li><a class="nav-link" routerLink="/vdp/feeds" routerLinkActive="sub-a-active">Feeds</a></li>
-            <li><a class="nav-link" href="#">Class</a></li>
-            <li><a class="nav-link" href="#">PI Club</a> </li>
+          <li *ngFor="let feed of feedTypes">
+            <a [routerLink]="'/vdp/feeds/'+feed"  class="nav-link" routerLinkActive="sub-a-active" >{{feed}}</a>
+          </li>
+         
         </ul>
       </li>
 

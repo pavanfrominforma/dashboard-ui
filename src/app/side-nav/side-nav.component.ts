@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import * as bootstrap from "bootstrap";
+import { ApiService } from "../services/api.service";
 
 @Component({
     selector: "app-side-nav",
@@ -7,12 +8,26 @@ import * as bootstrap from "bootstrap";
     styleUrls: ["./side-nav.component.scss"],
 })
 export class SideNavComponent implements OnInit {
-    constructor() {}
-
+    feedTypes: string[];
+    
+    constructor(private apiService: ApiService) {}
     ngOnInit(): void {
+        this.feedTypes = ["PI", "CLASS"]
         this.initialize();
+        this.loadVdpFeedTypes();
+    }
+    loadVdpFeedTypes(){
+        this.apiService.getVdpFeedsCount().subscribe({
+            next: (response: any) => {
+                this.feedTypes = response.map((feed: any) => feed.feedtype) 
+                console.log(response);
+            }
+        })
     }
 
+    encodeLink(link: string){
+        return encodeURIComponent(link);
+    }
     initialize() {
         document.addEventListener("DOMContentLoaded", function () {
             document
