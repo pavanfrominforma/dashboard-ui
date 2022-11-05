@@ -21,9 +21,18 @@
                 <tbody>
                   <tr *ngFor="let record of data">
                     <td *ngFor="let header of headers" class="min py-2 px-3 sticky-column"
-                      [title]="record[header.field]"
-                      [ngClass]="{'color-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') > -1, 
-                      'color-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') == -1}">{{record[header.field]}}</td>
+                    [ngClass]="{'color-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') > -1, 
+                      'color-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') == -1}"
+                      [title]="record[header.field]">
+                      <span *ngIf="header.field.toLowerCase().indexOf('status') == -1">{{record[header.field]}}</span>
+                      <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
+                        <div class="d-flex justify-content-between">
+                          <div class="">{{record[header.field]}}</div>
+                          <div class="comment-box"><i class="bi bi-envelope-open-fill"></i></div>
+                        </div>
+                      </span>
+                      
+                    </td>
                   </tr>
                 </tbody>
               </table>  
@@ -40,12 +49,12 @@
       <ul class="pagination">
         <li class="page-item drop-shadow">
           <a class="page-link" (click)="paginate(pagination.pageNumber - 1)" aria-label="Previous" unselectable="on">
-            <span aria-hidden="true" unselectable="on">&laquo;</span>
+            <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         <li class="page-item drop-shadow">
           <a class="page-link" (click)="paginate(pagination.pageNumber + 1)" aria-label="Next" unselectable="on">
-            <span aria-hidden="true" unselectable="on">&raquo;</span>
+            <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
       </ul>
