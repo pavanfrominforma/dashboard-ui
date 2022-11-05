@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/services/api.service";
 import { prefixZero } from "src/app/utils/common.utils";
 
@@ -20,18 +21,27 @@ export class FeedsComponent implements OnInit {
         totalPages: 0,
     };
 
+    
     feedCounts: any[];
-    isFeedCountLoading: boolean;
+    isFeedCountLoading: boolean = false;
 
-    constructor(private apiService: ApiService) {
+    // Filter
+    filters: any;
+
+    constructor(
+        private apiService: ApiService,
+        private activeRoute: ActivatedRoute
+    ) {
         this.overallData = [];
         this.headers = [];
         this.data = [];
         this.feedCounts = [];
-        this.isFeedCountLoading = false;
+        this.filters = {};
     }
 
     ngOnInit(): void {
+        const feedtype = this.activeRoute.snapshot.paramMap.get('feedtype');
+        this.filters = {"FEEDTYPE": feedtype};
         this.loadFeedsCount();
         this.loadFeedsData();
     }
@@ -53,7 +63,7 @@ export class FeedsComponent implements OnInit {
 
     loadFeedsData() {
         this.isLoading = true;
-        this.apiService.getVdpFeeds().subscribe({
+        this.apiService.getVdpFeeds(this.filters).subscribe({
             next: (response: any) => {
                 this.headers = this.modifyHeadersPosition(response.headers);
                 this.overallData = response.data;
