@@ -39,15 +39,13 @@
   <nav >
       <ul class="pagination">
         <li class="page-item drop-shadow">
-          <a class="page-link" (click)="paginate(pagination.pageNumber - 1)" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
+          <a class="page-link" (click)="paginate(pagination.pageNumber - 1)" aria-label="Previous" unselectable="on">
+            <span aria-hidden="true" unselectable="on">&laquo;</span>
           </a>
         </li>
         <li class="page-item drop-shadow">
-          <a class="page-link" (click)="paginate(pagination.pageNumber + 1)" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
+          <a class="page-link" (click)="paginate(pagination.pageNumber + 1)" aria-label="Next" unselectable="on">
+            <span aria-hidden="true" unselectable="on">&raquo;</span>
           </a>
         </li>
       </ul>
