@@ -13,8 +13,11 @@ export class ApiService {
     constructor(private http: HttpClient) {}
 
     getVdpFeeds(filters = {}) {
+        const body = {
+            filter: filters,
+        };
         const url = `${this.apiUrl}/vdp/feeds`;
-        return this.http.post(url, filters, { headers: this.headers });
+        return this.http.post(url, body, { headers: this.headers });
     }
 
     getVdpFeedsCount(filters = {}) {
