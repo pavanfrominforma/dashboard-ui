@@ -42,7 +42,7 @@ export class FeedsComponent implements OnInit {
             next: (response: any) => {
                 this.feedCounts = response;
                 this.feedCounts.forEach((feed) => {
-                    feed.active = prefixZero(feed.active)
+                    feed.active = prefixZero(feed.active);
                     feed.inactive = prefixZero(feed.inactive);
                 });
                 this.isFeedCountLoading = false;
@@ -84,5 +84,4 @@ export class FeedsComponent implements OnInit {
         headers = headers.filter((header: any) => header.show);
         return headers.sort((a: any, b: any) => a.position - b.position);
     }
-
 }

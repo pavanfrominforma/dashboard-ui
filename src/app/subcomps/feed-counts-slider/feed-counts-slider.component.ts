@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from "@angular/core";
 })
 export class FeedCountsSliderComponent implements OnInit {
     @Input("dataList") dataList: any[];
-    @Input('loading') isLoading = true;
+    @Input("loading") isLoading = true;
 
     constructor() {}
 
