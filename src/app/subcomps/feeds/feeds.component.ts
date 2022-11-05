@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "src/app/services/api.service";
+import { prefixZero } from "src/app/utils/common.utils";
 
 @Component({
     selector: "app-feeds",
@@ -31,8 +32,27 @@ export class FeedsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.isLoading = true;
+        this.loadFeedsCount();
+        this.loadFeedsData();
+    }
+
+    loadFeedsCount() {
         this.isFeedCountLoading = true;
+        this.apiService.getVdpFeedsCount().subscribe({
+            next: (response: any) => {
+                this.feedCounts = response;
+                this.feedCounts.forEach((feed) => {
+                    feed.active = prefixZero(feed.active)
+                    feed.inactive = prefixZero(feed.inactive);
+                });
+                this.isFeedCountLoading = false;
+            },
+            complete: () => (this.isFeedCountLoading = false),
+        });
+    }
+
+    loadFeedsData() {
+        this.isLoading = true;
         this.apiService.getVdpFeeds().subscribe({
             next: (response: any) => {
                 this.headers = this.modifyHeadersPosition(response.headers);
@@ -45,14 +65,6 @@ export class FeedsComponent implements OnInit {
                 this.isLoading = false;
             },
             complete: () => (this.isLoading = false),
-        });
-
-        this.apiService.getVdpFeedsCount().subscribe({
-            next: (response: any) => {
-                this.feedCounts = response;
-                this.isFeedCountLoading = false;
-            },
-            complete: () => (this.isFeedCountLoading = false),
         });
     }
 
@@ -72,4 +84,5 @@ export class FeedsComponent implements OnInit {
         headers = headers.filter((header: any) => header.show);
         return headers.sort((a: any, b: any) => a.position - b.position);
     }
+
 }
