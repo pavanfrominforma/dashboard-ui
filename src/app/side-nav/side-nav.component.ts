@@ -36,12 +36,12 @@ export class SideNavComponent implements OnInit {
     }
     initialize() {
         document.addEventListener("DOMContentLoaded", function () {
-            $("#sidebar ul.submenu").on('click', (e: any) => {
+            $("#sidebar ul.submenu").on("click", (e: any) => {
                 console.log("Event ", $(e.target).siblings("a.nav-link"));
-                $("#sidebar .nav-item a.nav-link").removeClass('nav-active')
-                $(e.target).parent().parent().siblings().addClass('nav-active')
-            })
-            
+                $("#sidebar .nav-item a.nav-link").removeClass("nav-active");
+                $(e.target).parent().parent().siblings().addClass("nav-active");
+            });
+
             document
                 .querySelectorAll("#sidebar .nav-link")
                 .forEach(function (element) {
