@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/services/api.service";
-import { prefixZero } from "src/app/utils/common.utils";
+import { getSorterBy, prefixZero } from "src/app/utils/common.utils";
+declare var $: any;
 
 @Component({
     selector: "app-feeds",
@@ -17,7 +18,7 @@ export class FeedsComponent implements OnInit {
     pagination: any = {
         pageNumber: 0,
         totalCount: 100,
-        maxRecordsPerPage: 50,
+        maxRecordsPerPage: 10,
         totalPages: 0,
     };
 
@@ -45,6 +46,7 @@ export class FeedsComponent implements OnInit {
                 this.feedType = feedtype;
                 this.filters = { FEEDTYPE: feedtype };
                 this.loadFeedsData();
+                this.reset();
                 this.bringFeedCountToFront();
             },
         });
@@ -52,6 +54,10 @@ export class FeedsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFeedsCount();
+    }
+
+    reset() {
+        this.headers.forEach((header: any) => (header.sortOrder = "desc"));
     }
 
     loadFeedsCount() {
@@ -65,7 +71,9 @@ export class FeedsComponent implements OnInit {
                 });
                 this.isFeedCountLoading = false;
             },
-            complete: () => (this.isFeedCountLoading = false),
+            complete: () => {
+                this.isFeedCountLoading = false;
+            },
         });
     }
 
@@ -74,7 +82,17 @@ export class FeedsComponent implements OnInit {
         this.apiService.getVdpFeeds(this.filters).subscribe({
             next: (response: any) => {
                 this.headers = this.modifyHeadersPosition(response.headers);
+                const feedStatusHeader = this.headers.filter(
+                    (header: any) =>
+                        header.field.toLowerCase().indexOf("status") > -1
+                );
+                // console.log("Feed status header ", feedStatusHeader);
                 this.overallData = response.data;
+                if (feedStatusHeader.length > 0)
+                    this.overallData = this.sortBy(
+                        feedStatusHeader[0],
+                        this.overallData
+                    );
                 this.pagination.totalCount = response.count;
                 this.pagination.totalPages = Math.ceil(
                     response.count / this.pagination.maxRecordsPerPage
@@ -82,7 +100,10 @@ export class FeedsComponent implements OnInit {
                 this.paginate(this.pagination.pageNumber);
                 this.isLoading = false;
             },
-            complete: () => (this.isLoading = false),
+            complete: () => {
+                this.isLoading = false;
+                this.initTooltips();
+            },
         });
     }
 
@@ -90,7 +111,7 @@ export class FeedsComponent implements OnInit {
         pageNumber = Math.max(pageNumber, 0);
         pageNumber = Math.min(pageNumber, this.pagination.totalPages - 1);
         this.pagination.pageNumber = pageNumber;
-        console.log("Page number ", pageNumber);
+        // console.log("Page number ", pageNumber);
         let startIndex = pageNumber * this.pagination.maxRecordsPerPage;
         let endIndex =
             pageNumber * this.pagination.maxRecordsPerPage +
@@ -101,7 +122,7 @@ export class FeedsComponent implements OnInit {
     bringFeedCountToFront() {
         console.log("Finding feeds ", this.feedType);
         let index = -1;
-        console.log("CNTS ", this.feedCounts);
+        // console.log("CNTS ", this.feedCounts);
         const actualFeed = this.feedCounts.filter((feed: any, idx: number) => {
             const isValid = this.feedType == feed.feedtype;
             if (isValid) index = idx;
@@ -109,13 +130,39 @@ export class FeedsComponent implements OnInit {
         });
         if (actualFeed.length > 0) {
             const feed = actualFeed[0];
-            console.log("Splice ", this.feedCounts.splice(index, 1));
+            // console.log("Splice ", this.feedCounts.splice(index, 1));
             this.feedCounts = [feed, ...this.feedCounts];
-            console.log("Con ", this.feedCounts);
+            // console.log("Con ", this.feedCounts);
         }
     }
     modifyHeadersPosition(headers: any[]) {
         headers = headers.filter((header: any) => header.show);
-        return headers.sort((a: any, b: any) => a.position - b.position);
+        headers = headers.sort((a: any, b: any) => a.position - b.position);
+        return headers;
+    }
+
+    sortBy(header: any, data: any[]) {
+        const field = header.field;
+        const datatype = header.datatype;
+        const sorter = getSorterBy(datatype);
+        header.sortOrder = header.sortOrder == "asc" ? "desc" : "asc";
+        let sortFunction = (prev: any, next: any) => sorter(prev, next, field);
+        this.activateCaret(field, header.sortOrder);
+        if (header.sortOrder == "desc")
+            sortFunction = (prev: any, next: any) => sorter(next, prev, field);
+        return data.sort(sortFunction);
+    }
+
+    activateCaret(header: string, sortOrder: string) {
+        $(".caret").removeClass("active");
+        const directionCaretClass =
+            sortOrder == "asc" ? ".up-caret" : ".down-caret";
+        $(`.caret.caret-${header}${directionCaretClass}`).addClass("active");
+    }
+
+    initTooltips() {
+        setTimeout(() => {
+          $('[data-toggle="tooltip"]').tooltip();
+        }, 2000);
     }
 }
