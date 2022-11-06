@@ -82,3 +82,28 @@ table tr td.color-success.sticky-column:last-child{
     margin-left: 15px;
     color: #169eff !important;
 }
+
+.sorter-arrow{
+    color: rgb(172, 171, 171);
+    cursor: pointer;
+    position: relative;
+}
+
+.caret{
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.sorter-arrow .caret.active{
+    color: #000 !important;
+}
+
+.up-caret{
+    position: absolute;
+    top: -3px;
+}
+.down-caret{
+    position: absolute;
+    top: 5px !important;
+}

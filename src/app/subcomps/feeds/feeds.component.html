@@ -15,9 +15,18 @@
             <table class="table table-striped" *ngIf="!isLoading">
                 <thead>
                   <tr>
-                    <th scope="col" *ngFor="let header of headers" class="min sticky-column py-3 px-3">{{header.name}}</th>
+                    <th scope="col" *ngFor="let header of headers" class="min sticky-column py-3 px-3">
+                      <div class="d-flex flex-row justify-content-between">
+                        <div>{{header.name}}</div> &nbsp;&nbsp;
+                        <div class="sorter-arrow d-flex flex-column" (click)="data = sortBy(header, data)">
+                          <i class="bi bi-caret-up-fill caret up-caret caret-{{header.field}}"></i>
+                          <i class="bi bi-caret-down-fill caret down-caret caret-{{header.field}}"></i>
+                        </div>
+                      </div>
+                    </th>
                   </tr> 
                 </thead>
+
                 <tbody>
                   <tr *ngFor="let record of data">
                     <td *ngFor="let header of headers" class="min py-2 px-3 sticky-column"
@@ -28,13 +37,16 @@
                       <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
                         <div class="d-flex justify-content-between">
                           <div class="">{{record[header.field]}}</div>
-                          <div class="comment-box"><i class="bi bi-envelope-open-fill"></i></div>
+                          <div class="comment-box" data-toggle="tooltip" 
+                            title="Feed Active and running.">
+                            <i class="bi bi-envelope-open-fill"></i>
+                          </div>
                         </div>
                       </span>
-                      
                     </td>
                   </tr>
                 </tbody>
+                <!-- Table body ends -->
               </table>  
             </div>  
         </div>
