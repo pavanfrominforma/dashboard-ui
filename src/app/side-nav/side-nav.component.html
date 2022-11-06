@@ -21,7 +21,7 @@
         </a>
       </li>
       <li class="nav-item my-1 has-submenu">
-        <a  class="nav-link block ps-4" routerLink="/vdp" routerLinkActive="nav-active">
+        <a  class="nav-link block ps-4">
           <div class="color-block"></div>
           <span class="ps-4">
             <i class="bi bi-table"></i> &nbsp;&nbsp;
@@ -30,9 +30,9 @@
           <span><i class="bi small bi-caret-down-fill"></i></span>
 
         </a>
-        <ul class="submenu collapse" >
+        <ul class="submenu collapse px-0" >
           <li *ngFor="let feed of feedTypes">
-            <a [routerLink]="'/vdp/feeds/'+feed"  class="nav-link" routerLinkActive="sub-a-active" >{{feed}}</a>
+            <a [routerLink]="'/vdp/feeds/'+feed"  class="nav-link px-5" routerLinkActive="sub-a-active" >{{feed}}</a>
           </li>
          
         </ul>

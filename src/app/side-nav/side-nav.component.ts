@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import * as bootstrap from "bootstrap";
 import { ApiService } from "../services/api.service";
-
+import { CommonService } from "../services/common.service";
+declare var $: any;
 @Component({
     selector: "app-side-nav",
     templateUrl: "./side-nav.component.html",
@@ -10,8 +11,12 @@ import { ApiService } from "../services/api.service";
 export class SideNavComponent implements OnInit {
     feedTypes: string[];
 
-    constructor(private apiService: ApiService) {}
+    constructor(
+        private apiService: ApiService,
+        private commonService: CommonService
+    ) {}
     ngOnInit(): void {
+        this.commonService.showLoader();
         this.feedTypes = ["PI", "CLASS"];
         this.initialize();
         this.loadVdpFeedTypes();
@@ -22,6 +27,7 @@ export class SideNavComponent implements OnInit {
                 this.feedTypes = response.map((feed: any) => feed.feedtype);
                 console.log(response);
             },
+            complete: () => this.commonService.hideLoader(),
         });
     }
 
@@ -30,6 +36,12 @@ export class SideNavComponent implements OnInit {
     }
     initialize() {
         document.addEventListener("DOMContentLoaded", function () {
+            $("#sidebar ul.submenu").on('click', (e: any) => {
+                console.log("Event ", $(e.target).siblings("a.nav-link"));
+                $("#sidebar .nav-item a.nav-link").removeClass('nav-active')
+                $(e.target).parent().parent().siblings().addClass('nav-active')
+            })
+            
             document
                 .querySelectorAll("#sidebar .nav-link")
                 .forEach(function (element) {
