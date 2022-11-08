@@ -20,6 +20,10 @@ export class FeedsComponent implements OnInit {
         totalCount: 100,
         maxRecordsPerPage: 10,
         totalPages: 0,
+        display: {
+            start: 0,
+            end: 0
+        }
     };
 
     feedType: string;
@@ -107,11 +111,30 @@ export class FeedsComponent implements OnInit {
         });
     }
 
+    minimum(a: number, b: number){
+        return Math.min(a, b);
+    }
+    
+    changePageRecords(recordsPerPage: string){
+    //     {{ (pagination.pageNumber * pagination.maxRecordsPerPage) + 1 }}
+    //    - {{ minimum((pagination.pageNumber + 1)  * pagination.maxRecordsPerPage, pagination.totalCount) }} of 
+    //   {{pagination.totalCount}}
+        this.pagination.maxRecordsPerPage = Number(recordsPerPage);
+        if(this.pagination.pageNumber == this.pagination.totalCount)
+            this.pagination.pageNumber = 0;
+        this.pagination.totalPages = Math.ceil(
+            this.pagination.totalCount / this.pagination.maxRecordsPerPage
+        );
+        this.paginate(this.pagination.pageNumber);
+    }
+
     paginate(pageNumber: number) {
         pageNumber = Math.max(pageNumber, 0);
         pageNumber = Math.min(pageNumber, this.pagination.totalPages - 1);
         this.pagination.pageNumber = pageNumber;
         // console.log("Page number ", pageNumber);
+        this.pagination.display.start = pageNumber * this.pagination.maxRecordsPerPage + 1;
+        this.pagination.display.end = Math.min((pageNumber + 1 ) * this.pagination.maxRecordsPerPage, this.pagination.totalCount);
         let startIndex = pageNumber * this.pagination.maxRecordsPerPage;
         let endIndex =
             pageNumber * this.pagination.maxRecordsPerPage +
