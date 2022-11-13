@@ -18,7 +18,7 @@ export class FeedsComponent implements OnInit {
     pagination: any = {
         pageNumber: 0,
         totalCount: 100,
-        maxRecordsPerPage: 10,
+        maxRecordsPerPage: 5,
         totalPages: 0,
         display: {
             start: 0,
@@ -140,6 +140,7 @@ export class FeedsComponent implements OnInit {
             pageNumber * this.pagination.maxRecordsPerPage +
             this.pagination.maxRecordsPerPage;
         this.data = this.overallData.slice(startIndex, endIndex);
+        this.initTooltips();
     }
 
     bringFeedCountToFront() {
@@ -153,7 +154,7 @@ export class FeedsComponent implements OnInit {
         });
         if (actualFeed.length > 0) {
             const feed = actualFeed[0];
-            // console.log("Splice ", this.feedCounts.splice(index, 1));
+            this.feedCounts.splice(index, 1);
             this.feedCounts = [feed, ...this.feedCounts];
             // console.log("Con ", this.feedCounts);
         }
@@ -184,6 +185,10 @@ export class FeedsComponent implements OnInit {
     }
 
     initTooltips() {
+        setTimeout(() => {
+            $('[data-toggle="tooltip"]').tooltip();
+          }, 500);
+
         setTimeout(() => {
           $('[data-toggle="tooltip"]').tooltip();
         }, 2000);
