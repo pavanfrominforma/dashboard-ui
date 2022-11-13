@@ -18,16 +18,17 @@ export class FeedsComponent implements OnInit {
     pagination: any = {
         pageNumber: 0,
         totalCount: 100,
-        maxRecordsPerPage: 5,
+        maxRecordsPerPage: 10,
         totalPages: 0,
         display: {
             start: 0,
-            end: 0
-        }
+            end: 0,
+        },
     };
 
     feedType: string;
     feedCounts: any[];
+    selectedFeedCount: any;
     isFeedCountLoading: boolean = false;
 
     // Filter
@@ -73,6 +74,7 @@ export class FeedsComponent implements OnInit {
                     feed.active = prefixZero(feed.active);
                     feed.inactive = prefixZero(feed.inactive);
                 });
+                this.bringFeedCountToFront();
                 this.isFeedCountLoading = false;
             },
             complete: () => {
@@ -111,16 +113,16 @@ export class FeedsComponent implements OnInit {
         });
     }
 
-    minimum(a: number, b: number){
+    minimum(a: number, b: number) {
         return Math.min(a, b);
     }
-    
-    changePageRecords(recordsPerPage: string){
-    //     {{ (pagination.pageNumber * pagination.maxRecordsPerPage) + 1 }}
-    //    - {{ minimum((pagination.pageNumber + 1)  * pagination.maxRecordsPerPage, pagination.totalCount) }} of 
-    //   {{pagination.totalCount}}
-        this.pagination.maxRecordsPerPage = Number(recordsPerPage);
-        if(this.pagination.pageNumber == this.pagination.totalCount)
+
+    changePageRecords(recordsPerPage: string) {
+        this.pagination.maxRecordsPerPage = Math.min(
+            this.pagination.totalCount,
+            Number(recordsPerPage)
+        );
+        if (this.pagination.pageNumber == this.pagination.totalCount)
             this.pagination.pageNumber = 0;
         this.pagination.totalPages = Math.ceil(
             this.pagination.totalCount / this.pagination.maxRecordsPerPage
@@ -133,8 +135,12 @@ export class FeedsComponent implements OnInit {
         pageNumber = Math.min(pageNumber, this.pagination.totalPages - 1);
         this.pagination.pageNumber = pageNumber;
         // console.log("Page number ", pageNumber);
-        this.pagination.display.start = pageNumber * this.pagination.maxRecordsPerPage + 1;
-        this.pagination.display.end = Math.min((pageNumber + 1 ) * this.pagination.maxRecordsPerPage, this.pagination.totalCount);
+        this.pagination.display.start =
+            pageNumber * this.pagination.maxRecordsPerPage + 1;
+        this.pagination.display.end = Math.min(
+            (pageNumber + 1) * this.pagination.maxRecordsPerPage,
+            this.pagination.totalCount
+        );
         let startIndex = pageNumber * this.pagination.maxRecordsPerPage;
         let endIndex =
             pageNumber * this.pagination.maxRecordsPerPage +
@@ -154,6 +160,7 @@ export class FeedsComponent implements OnInit {
         });
         if (actualFeed.length > 0) {
             const feed = actualFeed[0];
+            this.selectedFeedCount = feed;
             this.feedCounts.splice(index, 1);
             this.feedCounts = [feed, ...this.feedCounts];
             // console.log("Con ", this.feedCounts);
@@ -187,10 +194,10 @@ export class FeedsComponent implements OnInit {
     initTooltips() {
         setTimeout(() => {
             $('[data-toggle="tooltip"]').tooltip();
-          }, 500);
+        }, 500);
 
         setTimeout(() => {
-          $('[data-toggle="tooltip"]').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
         }, 2000);
     }
 }
