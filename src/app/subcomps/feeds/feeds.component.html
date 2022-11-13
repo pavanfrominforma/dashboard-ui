@@ -1,11 +1,36 @@
 <div class="row mb-2">
     <h2>VDP Feeds</h2>
 </div>
-<app-feed-counts-slider [dataList]="feedCounts" [loading]="isFeedCountLoading"></app-feed-counts-slider>
-<div class="row mt-3">
-    <div class="col-12 ">
+<!-- <app-feed-counts-slider [dataList]="[selectedFeedCount]" [loading]="isFeedCountLoading"></app-feed-counts-slider> -->
+<div class="row">
+  
+    <div class="col-12 mt-2">
         <div class="px-3 py-3 bg-white drop-shadow">
-              <h4>VDP - Vessels</h4>
+            <div class="d-flex justify-content-between align-content-center ">
+              <div class="my-2 fs-5 d-flex">
+                <div class="mx-1">
+                  {{feedType}} feed
+                </div> 
+                <!-- <span class="divider text-light2 mx-2">|</span> -->
+                <div class="statuses align-self-center bg-light2 rounded-2 py-1 mx-1">
+                </div>
+                
+              </div>
+              <div class="my-2 statuses align-self-center">
+                <span class="bg-light2 rounded-2 py-1 mx-1">
+                  <span class="mx-1 text-success p-1 px-1 rounded">
+                    Active <span class="fw-bolder">{{selectedFeedCount.active}}</span>
+                  </span>
+                  <span class="divider text-light2 mx-1">|</span>
+                  <span class="mx-1 text-danger p-1 px-1 rounded">
+                    Due or Failed 
+                    <span class="fw-bolder">{{selectedFeedCount.inactive}}</span>
+                  </span>  
+                </span>
+
+                <span class="bg-primary text-white rounded-1 p-1 mx-1 bi bi-funnel-fill"></span>
+              </div>
+            </div>
             <div class="max-width overflow-scroll">
             <div class="d-flex flex-row py-4 justify-content-center" *ngIf="isLoading">
               <div class="spinner-border text-secondary" role="status" style="display: block">
