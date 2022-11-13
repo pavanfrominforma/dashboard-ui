@@ -1,6 +1,13 @@
 
 <div class="wrapper d-flex">
-  <nav id="sidebar">
+  <nav id="sidebar" class="closed">
+   
+    <div class="toggle-sidebar position-absolute my-5">
+      <div class="toggle-sidebar-wrapper border rounded-circle bg-white drop-shadow">
+        <p class="bi bi bi-chevron-left" *ngIf="isSideBarOpen" style="position: relative; right: 2px !important"></p> 
+        <p class="bi bi bi-chevron-right" *ngIf="!isSideBarOpen" style="position: relative; right: -1px !important"></p>  
+      </div>
+    </div>
     <ul class="nav flex-column pt-4">
       <li class="nav-item my-1">
         <a class="nav-link block ps-4" routerLink="/home" routerLinkActive="nav-active">
