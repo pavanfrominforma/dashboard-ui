@@ -23,7 +23,7 @@ export class SideNavComponent implements OnInit {
         this.feedTypes = ["PI", "CLASS"];
         this.initialize();
         this.loadVdpFeedTypes();
-        this.toggleNavbar();
+        this.toggleNavbar(false);
     }
     loadVdpFeedTypes() {
         this.apiService.getVdpFeedsCount().subscribe({
@@ -55,6 +55,7 @@ export class SideNavComponent implements OnInit {
     }
     initialize() {
         document.addEventListener("DOMContentLoaded", () => {
+             
             $(".toggle-sidebar").on("click", () => {
                 this.toggleNavbar();
             });
@@ -64,39 +65,46 @@ export class SideNavComponent implements OnInit {
                 $(e.target).parent().parent().siblings().addClass("nav-active");
             });
 
-            document
-                .querySelectorAll("#sidebar .nav-link")
-                .forEach(function (element) {
-                    element.addEventListener("click", function (e) {
-                        let nextEl = element.nextElementSibling as any;
-                        let parentEl = element.parentElement as any;
+            $(".nav-item.has-submenu").on('click', (e: any) => {
+                e.preventDefault();
+                console.log(e.target)
+                
+                // const isNavLink = $(e.target).hasClass("nav-link");
+                if(e.target == e.currentTarget ) return;
+                console.log("E ELements ", e.target, " Target ", e.currentTarget);
+                const parent = $('.nav-item.has-submenu');
+                const collapseElements = $(parent).find(".submenu.collapse");
+                const currentChild = $(e.currentTarget).find(".submenu.collapse");
 
-                        if (
-                            nextEl &&
-                            parentEl.classList.contains("has-submenu")
-                        ) {
-                            e.preventDefault();
+                const allToggleRights = $(parent).find(".bi-caret-right-fill");
+                const allToggleDowns = $(parent).find(".bi-caret-down-fill");
 
-                            if (nextEl.classList.contains("show")) {
-                                let mycollapse = new bootstrap.Collapse(nextEl);
-                                mycollapse.hide();
-                            } else {
-                                let mycollapse = new bootstrap.Collapse(nextEl);
+                const toggleRight = $(e.currentTarget).find(".bi-caret-right-fill")
+                const toggleDown = $(e.currentTarget).find(".bi-caret-down-fill")
+            
+                const isAlreadyShowing = $(currentChild[0]).hasClass('show');
 
-                                mycollapse.show();
-                                // find other submenus with class=show
-                                var opened_submenu =
-                                    parentEl.parentElement.querySelector(
-                                        ".submenu.show"
-                                    );
-                                // if it exists, then close all of them
-                                if (opened_submenu) {
-                                    new bootstrap.Collapse(opened_submenu);
-                                }
-                            }
-                        }
-                    }); // addEventListener
-                }); // forEach
+                $(allToggleRights).hide();
+                $(allToggleDowns).show();
+
+                const collapseItems = collapseElements.toArray().map((cur: any) => {
+                    const collapse = new bootstrap.Collapse(cur, {toggle: false});
+                    return collapse;
+                })
+                collapseItems.forEach((l: any) => l.hide());
+                const currentCollapseItem = new bootstrap.Collapse(currentChild[0], {toggle: false});
+                if(isAlreadyShowing){
+                    $(toggleRight).hide();
+                    $(toggleDown).show();
+                    currentCollapseItem.hide();
+                }
+                else{ 
+                    $(toggleDown).hide();
+                    $(toggleRight).show();
+                    currentCollapseItem.show(); 
+                }
+            });
+
         });
     }
 }
