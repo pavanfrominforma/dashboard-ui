@@ -62,8 +62,8 @@
                       <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
                         <div class="d-flex justify-content-between">
                           <div class="">{{record[header.field]}}</div>
-                          <div class="comment-box" data-toggle="tooltip" 
-                            title="Feed Active and running.">
+                          <div class="comment-box" data-bs-toggle="modal" data-bs-target="#commentModal"
+                            (click)="selectComment(record)" title="Feed Active and running.">
                             <i class="bi bi-envelope-open-fill"></i>
                           </div>
                         </div>
@@ -110,3 +110,46 @@
     </nav>
 </div>
 
+
+<!-- Modal For Comments -->
+<div class="modal fade" id="commentModal" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-light2">
+        <h6 class="modal-title" id="commentModalLabel" class="fs-6">Comments ( on feed {{selectedRecord?.FEEDNAME}} )</h6>
+        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearCommentBoxSelectors()"></button> -->
+      </div>
+      <div class="modal-body"  *ngIf="!isEditingComment && selectedRecord?.COMMENTS && selectedRecord?.COMMENTS?.trim() != ''">
+        <div class="position-relative px-2 py-1">
+          <div class="position-absolute cursor-pointer" 
+            (click)="isEditingComment=true; commentBoxCtrl.setValue(selectedRecord.COMMENTS)"
+            style="color: #169eff; font-size: 16px; top: 4px; right: 4px;">
+            <i class="bi bi-pencil-fill"></i>
+          </div>
+          <p class="px-2">{{selectedRecord?.COMMENTS}}</p>
+        </div>
+      </div>
+      <!-- On edit clicked -->
+      <div class="modal-body" *ngIf="isEditingComment || !selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''">
+        <div class="mb-3 position-relative">
+          <span class="position-absolute end-0 top-0 text-danger fs-3 cursor-pointer" 
+          *ngIf="selectedRecord?.COMMENTS?.trim() != '' && selectedRecord?.COMMENTS"
+          (click)="isEditingComment=false">
+            <i class="bi bi-x"></i>
+          </span>
+          <label for="commentId" class="form-label fs-12">
+            <span *ngIf="selectedRecord?.COMMENTS?.trim() != '' && selectedRecord?.COMMENTS">Edit</span>
+            <span *ngIf="!selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''">Add</span>
+            Comment
+          </label>
+          <textarea class="form-control" [formControl]="commentBoxCtrl" id="commentId" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" (click)="clearCommentBoxSelectors()">Close</button>
+        <button type="button" class="btn btn-primary" 
+          *ngIf="isEditingComment || !selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
