@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/services/api.service";
 import { getSorterBy, prefixZero } from "src/app/utils/common.utils";
@@ -15,6 +16,9 @@ export class FeedsComponent implements OnInit {
     data: any[];
     isLoading = false;
 
+    isEditingComment = false;
+    commentBoxCtrl: FormControl;
+
     pagination: any = {
         pageNumber: 0,
         totalCount: 100,
@@ -29,7 +33,8 @@ export class FeedsComponent implements OnInit {
     feedType: string;
     feedCounts: any[];
     selectedFeedCount: any;
-    isFeedCountLoading: boolean = false;
+    isFeedCountLoading: boolean = false;   
+    selectedRecord: any;
 
     // Filter
     filters: any;
@@ -43,7 +48,7 @@ export class FeedsComponent implements OnInit {
         this.data = [];
         this.feedCounts = [];
         this.filters = {};
-
+        this.commentBoxCtrl = new FormControl();
         this.activeRoute.params.subscribe({
             next: (params: any) => {
                 const feedtype =
@@ -63,6 +68,18 @@ export class FeedsComponent implements OnInit {
 
     reset() {
         this.headers.forEach((header: any) => (header.sortOrder = "desc"));
+        this.isEditingComment = false;
+        this.commentBoxCtrl.reset();
+    }
+
+    clearCommentBoxSelectors(){
+        this.isEditingComment = false;
+        this.selectedRecord = null;
+        this.commentBoxCtrl.reset();
+    }
+
+    saveComment(){
+        
     }
 
     loadFeedsCount() {
@@ -182,6 +199,10 @@ export class FeedsComponent implements OnInit {
         if (header.sortOrder == "desc")
             sortFunction = (prev: any, next: any) => sorter(next, prev, field);
         return data.sort(sortFunction);
+    }
+
+    selectComment(comment: any){
+        this.selectedRecord = comment;
     }
 
     activateCaret(header: string, sortOrder: string) {
