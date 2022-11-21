@@ -9,6 +9,7 @@ import { MainPageComponent } from "./main-page/main-page.component";
 import { FeedsComponent } from "./subcomps/feeds/feeds.component";
 import { FeedCountsSliderComponent } from "./subcomps/feed-counts-slider/feed-counts-slider.component";
 import { MainLoaderComponent } from "./main-loader/main-loader.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
@@ -20,7 +21,7 @@ import { MainLoaderComponent } from "./main-loader/main-loader.component";
         FeedCountsSliderComponent,
         MainLoaderComponent,
     ],
-    imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+    imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule],
     providers: [],
     bootstrap: [AppComponent],
 })
