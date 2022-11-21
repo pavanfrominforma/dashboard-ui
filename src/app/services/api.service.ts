@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { of } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -23,5 +22,10 @@ export class ApiService {
     getVdpFeedsCount(filters = {}) {
         const url = `${this.apiUrl}/vdp/feeds/count`;
         return this.http.post(url, filters, { headers: this.headers });
+    }
+
+    saveComment(comment: any){
+        const url = `${this.apiUrl}/vdp/feeds/comments`;
+        return this.http.post(url, comment, { headers: this.headers });
     }
 }
