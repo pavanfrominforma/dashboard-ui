@@ -15,17 +15,17 @@ export class ApiService {
         const body = {
             filter: filters,
         };
-        const url = `${this.apiUrl}/vdp/feeds`;
+        const url = `${this.apiUrl}/api/vdp/feeds`;
         return this.http.post(url, body, { headers: this.headers });
     }
 
     getVdpFeedsCount(filters = {}) {
-        const url = `${this.apiUrl}/vdp/feeds/count`;
+        const url = `${this.apiUrl}/api/vdp/feeds/count`;
         return this.http.post(url, filters, { headers: this.headers });
     }
 
     saveComment(comment: any){
-        const url = `${this.apiUrl}/vdp/feeds/comments`;
+        const url = `${this.apiUrl}/api/vdp/feeds/comments`;
         return this.http.post(url, comment, { headers: this.headers });
     }
 }
