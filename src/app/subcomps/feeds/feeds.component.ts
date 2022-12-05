@@ -79,7 +79,30 @@ export class FeedsComponent implements OnInit {
     }
 
     saveComment(){
-        
+
+        const dataFeedFileId = this.selectedRecord?.DATAFEEDFILEID;
+        const dataFeedId = this.selectedRecord?.DATAFEEDID;
+        const commentId = this.selectedRecord?.COMMENTID;
+        const comment = this.commentBoxCtrl.value;
+
+        const payload = {
+            dataFeedFileId, dataFeedId, commentId, comment
+        }
+        this.apiService.saveComment(payload).subscribe({
+            next: (res: any) => {
+                console.log("Comments saved successfully !");
+                alert(res?.message || "Comment saved successfully!");
+                this.selectedRecord.COMMENTS = comment;
+                $(".comments-icon-"+this.selectedRecord?.DATAFEEDFILEID)
+                    .attr('title', comment)
+                    .attr('data-bs-original-title', comment)
+                    .tooltip();
+            },
+            error: (err: any) => {
+                console.log("ERror is ", err);
+                alert("Error occurred while saving comment!");
+            }
+        });
     }
 
     loadFeedsCount() {
@@ -219,6 +242,6 @@ export class FeedsComponent implements OnInit {
 
         setTimeout(() => {
             $('[data-toggle="tooltip"]').tooltip();
-        }, 2000);
+        }, 2500);
     }
 }

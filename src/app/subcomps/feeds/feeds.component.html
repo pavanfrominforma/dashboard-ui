@@ -19,12 +19,12 @@
               <div class="my-2 statuses align-self-center">
                 <span class="bg-light2 rounded-2 py-1 mx-1">
                   <span class="mx-1 text-success p-1 px-1 rounded">
-                    Active <span class="fw-bolder">{{selectedFeedCount.active}}</span>
+                    Active <span class="fw-bolder">{{selectedFeedCount?.active}}</span>
                   </span>
                   <span class="divider text-light2 mx-1">|</span>
                   <span class="mx-1 text-danger p-1 px-1 rounded">
                     Due or Failed 
-                    <span class="fw-bolder">{{selectedFeedCount.inactive}}</span>
+                    <span class="fw-bolder">{{selectedFeedCount?.inactive}}</span>
                   </span>  
                 </span>
 
@@ -62,8 +62,8 @@
                       <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
                         <div class="d-flex justify-content-between">
                           <div class="">{{record[header.field]}}</div>
-                          <div class="comment-box" data-bs-toggle="modal" data-bs-target="#commentModal"
-                            (click)="selectComment(record)" title="Feed Active and running.">
+                          <div class="comment-box comments-icon-{{record?.DATAFEEDFILEID}}" data-bs-toggle="modal"  data-toggle="tooltip" data-placement="left" data-bs-target="#commentModal"
+                            (click)="selectComment(record)" [title]="record?.COMMENTS">
                             <i class="bi bi-envelope-open-fill"></i>
                           </div>
                         </div>
@@ -148,7 +148,9 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" (click)="clearCommentBoxSelectors()">Close</button>
         <button type="button" class="btn btn-primary" 
-          *ngIf="isEditingComment || !selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''">Save</button>
+          *ngIf="isEditingComment || !selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''"
+          (click)="saveComment()"
+          >Save</button>
       </div>
     </div>
   </div>
