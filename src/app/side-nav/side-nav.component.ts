@@ -65,45 +65,23 @@ export class SideNavComponent implements OnInit {
                 $(e.target).parent().parent().siblings().addClass("nav-active");
             });
 
-            $(".nav-item.has-submenu").on('click', (e: any) => {
-                e.preventDefault();
-                console.log(e.target)
-                
-                // const isNavLink = $(e.target).hasClass("nav-link");
-                if(e.target == e.currentTarget ) return;
-                console.log("E ELements ", e.target, " Target ", e.currentTarget);
-                const parent = $('.nav-item.has-submenu');
-                const collapseElements = $(parent).find(".submenu.collapse");
-                const currentChild = $(e.currentTarget).find(".submenu.collapse");
+            $(".nav-item.has-submenu > a.nav-link").on('click', (e: any) => {
+                const dropdown = $(e.currentTarget).siblings(".submenu");
+                const currentState = $(dropdown).css('display') == 'none';
+                const isHidden = !currentState;
+                const toggleRight = $(e.currentTarget).parent().find(".bi-caret-right-fill");
+                const toggleDown = $(e.currentTarget).parent().find(".bi-caret-down-fill");
 
-                const allToggleRights = $(parent).find(".bi-caret-right-fill");
-                const allToggleDowns = $(parent).find(".bi-caret-down-fill");
-
-                const toggleRight = $(e.currentTarget).find(".bi-caret-right-fill")
-                const toggleDown = $(e.currentTarget).find(".bi-caret-down-fill")
-            
-                const isAlreadyShowing = $(currentChild[0]).hasClass('show');
-
-                $(allToggleRights).hide();
-                $(allToggleDowns).show();
-
-                const collapseItems = collapseElements.toArray().map((cur: any) => {
-                    const collapse = new bootstrap.Collapse(cur, {toggle: false});
-                    return collapse;
-                })
-                collapseItems.forEach((l: any) => l.hide());
-                const currentCollapseItem = new bootstrap.Collapse(currentChild[0], {toggle: false});
-                if(isAlreadyShowing){
+                if(isHidden){
                     $(toggleRight).hide();
                     $(toggleDown).show();
-                    currentCollapseItem.hide();
-                }
-                else{ 
-                    $(toggleDown).hide();
+                }else{
                     $(toggleRight).show();
-                    currentCollapseItem.show(); 
+                    $(toggleDown).hide();
                 }
-            });
+                $(dropdown).slideToggle("fast");
+
+            })
 
         });
     }
