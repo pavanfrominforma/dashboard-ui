@@ -63,8 +63,8 @@
                         <div class="d-flex justify-content-between">
                           <div class="">{{record[header.field]}}</div>
                           <div class="comment-box comments-icon-{{record?.DATAFEEDFILEID}}" data-bs-toggle="modal"  data-toggle="tooltip" data-placement="left" data-bs-target="#commentModal"
-                            (click)="selectComment(record)" [title]="record?.COMMENTS">
-                            <i class="bi bi-envelope-open-fill"></i>
+                            (click)="selectComment(record)" [title]="record?.COMMENTS || ''">
+                            <i  class="bi bi-envelope-open-fill cursor-pointer" [ngClass]="{'disable-envelope': !record?.COMMENTS}"></i>
                           </div>
                         </div>
                       </span>
