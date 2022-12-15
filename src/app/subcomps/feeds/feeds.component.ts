@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { Form, FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "src/app/services/api.service";
 import { getSorterBy, prefixZero } from "src/app/utils/common.utils";
@@ -15,9 +15,12 @@ export class FeedsComponent implements OnInit {
     headers: any[];
     data: any[];
     isLoading = false;
+    predefinedComments: any[];
 
     isEditingComment = false;
     commentBoxCtrl: FormControl;
+    commentBoxSelectControl: FormControl;
+    selectedPredefinedComment: any = {name: "Select"};
 
     pagination: any = {
         pageNumber: 0,
@@ -49,6 +52,7 @@ export class FeedsComponent implements OnInit {
         this.feedCounts = [];
         this.filters = {};
         this.commentBoxCtrl = new FormControl();
+        this.commentBoxSelectControl = new FormControl();
         this.activeRoute.params.subscribe({
             next: (params: any) => {
                 const feedtype =
@@ -58,6 +62,7 @@ export class FeedsComponent implements OnInit {
                 this.loadFeedsData();
                 this.reset();
                 this.bringFeedCountToFront();
+                this.getPredefinedComments();
             },
         });
     }
@@ -72,10 +77,33 @@ export class FeedsComponent implements OnInit {
         this.commentBoxCtrl.reset();
     }
 
+    selectPredefinedComment(comment: any){
+        console.log("Comment is clicked ", this.commentBoxSelectControl)
+        if(typeof comment != 'object' || comment?.name == 'Select') {
+            console.log("intog opnject ", comment);
+            this.commentBoxCtrl.reset();
+            this.commentBoxCtrl.setValue('');
+            this.commentBoxCtrl.updateValueAndValidity();
+            return;
+        };
+        if(comment.name == 'Others') return;
+        this.commentBoxCtrl.setValue(comment.name);
+        this.commentBoxCtrl.updateValueAndValidity();
+    }
+
+    getPredefinedComments(){
+        this.apiService.getPredefinedComments().subscribe({
+            next: (predefinedComments: any[]) => {
+                this.predefinedComments = predefinedComments;
+            }
+        })
+    }
+
     clearCommentBoxSelectors(){
         this.isEditingComment = false;
         this.selectedRecord = null;
         this.commentBoxCtrl.reset();
+        this.selectPredefinedComment = null;
     }
 
     saveComment(){
@@ -234,6 +262,7 @@ export class FeedsComponent implements OnInit {
             sortOrder == "asc" ? ".up-caret" : ".down-caret";
         $(`.caret.caret-${header}${directionCaretClass}`).addClass("active");
     }
+    
 
     initTooltips() {
         setTimeout(() => {
