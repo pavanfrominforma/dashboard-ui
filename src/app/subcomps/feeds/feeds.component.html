@@ -140,7 +140,7 @@
           <label for="commentId" class="form-label fs-12">
             <span *ngIf="selectedRecord?.COMMENTS?.trim() != '' && selectedRecord?.COMMENTS">Edit</span>
             <span *ngIf="!selectedRecord?.COMMENTS || selectedRecord?.COMMENTS?.trim() == ''">Add</span>
-            Comment {{selectedPredefinedComment | json}}
+            Comment 
           </label>
           <!-- Predefined comments dropdown -->
           <select class="form-select form-select-sm mb-3" [(ngModel)]="selectedPredefinedComment"
