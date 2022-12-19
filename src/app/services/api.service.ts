@@ -28,4 +28,9 @@ export class ApiService {
         const url = `${this.apiUrl}/api/vdp/feeds/comments`;
         return this.http.post(url, comment, { headers: this.headers });
     }
+
+    getPredefinedComments(){
+        const url = `${this.apiUrl}/api/vdp/feeds/comments/predefined`;
+        return this.http.get(url, { headers: this.headers });
+    }
 }
