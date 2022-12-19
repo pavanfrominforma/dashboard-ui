@@ -69,6 +69,7 @@ export class FeedsComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadFeedsCount();
+        this.getPredefinedComments();
     }
 
     reset() {
@@ -79,7 +80,7 @@ export class FeedsComponent implements OnInit {
 
     selectPredefinedComment(comment: any){
         console.log("Comment is clicked ", this.commentBoxSelectControl)
-        if(typeof comment != 'object' || comment?.name == 'Select') {
+        if(typeof comment != 'object' || comment?.NAME == 'Select') {
             console.log("intog opnject ", comment);
             this.commentBoxCtrl.reset();
             this.commentBoxCtrl.setValue('');
@@ -87,7 +88,7 @@ export class FeedsComponent implements OnInit {
             return;
         };
         if(comment.name == 'Others') return;
-        this.commentBoxCtrl.setValue(comment.name);
+        this.commentBoxCtrl.setValue(comment.NAME);
         this.commentBoxCtrl.updateValueAndValidity();
     }
 

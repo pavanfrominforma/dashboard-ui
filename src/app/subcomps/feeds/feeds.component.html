@@ -147,10 +147,10 @@
             [formControl]="commentBoxSelectControl"
             (change)="selectPredefinedComment(selectedPredefinedComment)">
             <option selected>Select</option>
-            <option *ngFor="let cmt of predefinedComments" [ngValue]="cmt" >{{cmt?.name}}</option>
+            <option *ngFor="let cmt of predefinedComments" [ngValue]="cmt" >{{cmt?.NAME}}</option>
           </select>
           <!-- End of predefined comments dropdown -->
-          <textarea class="form-control"  [formControl]="commentBoxCtrl" *ngIf="selectedPredefinedComment?.name == 'Others'"
+          <textarea class="form-control"  [formControl]="commentBoxCtrl" *ngIf="selectedPredefinedComment?.NAME == 'Others'"
             id="commentId" rows="3"></textarea>
         </div>
       </div>
