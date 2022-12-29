@@ -1,0 +1,26 @@
+.filter-tag{
+    background-color: #fff;
+    color: #0d6efd;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 10%);
+    font-size: 14px;
+}
+
+.filter-tag .filter-key {
+    color: rgb(110, 144, 255);    
+}
+
+.filter-tag:hover .remove-btn{
+    display: inline-block;
+    transition: ease-in;
+    transition-duration: 0.1s;
+}
+
+.remove-btn{
+    transition-duration: .3s;
+}
+
+.filter-tag .remove-btn:hover{
+    background-color: rgb(239, 85, 85);
+    color: #fff !important;
+
+}
