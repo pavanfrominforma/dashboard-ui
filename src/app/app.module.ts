@@ -10,6 +10,9 @@ import { FeedsComponent } from "./subcomps/feeds/feeds.component";
 import { FeedCountsSliderComponent } from "./subcomps/feed-counts-slider/feed-counts-slider.component";
 import { MainLoaderComponent } from "./main-loader/main-loader.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FiltersComponent } from "./subcomps/filters/filters.component";
+import { FilterControlsComponent } from "./subcomps/filters/filter-controls/filter-controls.component";
+import { FilterTagsComponent } from "./subcomps/filters/filter-tags/filter-tags.component";
 
 @NgModule({
     declarations: [
@@ -20,8 +23,17 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         FeedsComponent,
         FeedCountsSliderComponent,
         MainLoaderComponent,
+        FiltersComponent,
+        FilterControlsComponent,
+        FilterTagsComponent,
     ],
-    imports: [BrowserModule, HttpClientModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })
