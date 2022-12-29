@@ -2,6 +2,9 @@
     <h2>VDP Feeds</h2>
 </div>
 <!-- <app-feed-counts-slider [dataList]="[selectedFeedCount]" [loading]="isFeedCountLoading"></app-feed-counts-slider> -->
+<app-filters [columns]= "tableColumns" [filters]="filters" 
+  (onFilterAdded)="addFilter($event)" 
+  (onFilterRemoved)="removeFilter($event)"></app-filters>
 <div class="row">
   
     <div class="col-12 mt-2">

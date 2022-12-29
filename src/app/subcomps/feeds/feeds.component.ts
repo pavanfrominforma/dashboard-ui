@@ -40,6 +40,7 @@ export class FeedsComponent implements OnInit {
     selectedRecord: any;
 
     // Filter
+    tableColumns: any[];
     filters: any;
 
     constructor(
@@ -48,6 +49,7 @@ export class FeedsComponent implements OnInit {
     ) {
         this.overallData = [];
         this.headers = [];
+        this.tableColumns = [];
         this.data = [];
         this.feedCounts = [];
         this.filters = {};
@@ -72,6 +74,16 @@ export class FeedsComponent implements OnInit {
         this.getPredefinedComments();
     }
 
+    addFilter(filter: any){
+        const filterKeys = Object.keys(filter);
+        filterKeys.forEach((key: any) => {
+            this.filters[key] = filter[key];
+        })
+    }
+
+    removeFilter(filterObj: {field: string}){ 
+        delete this.filters[filterObj.field];
+    }
     reset() {
         this.headers.forEach((header: any) => (header.sortOrder = "desc"));
         this.isEditingComment = false;
@@ -168,6 +180,7 @@ export class FeedsComponent implements OnInit {
                         feedStatusHeader[0],
                         this.overallData
                     );
+                this.tableColumns = this.headers.slice();
                 this.pagination.totalCount = response.count;
                 this.pagination.totalPages = Math.ceil(
                     response.count / this.pagination.maxRecordsPerPage
