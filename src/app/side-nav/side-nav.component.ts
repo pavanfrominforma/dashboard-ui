@@ -55,7 +55,6 @@ export class SideNavComponent implements OnInit {
     }
     initialize() {
         document.addEventListener("DOMContentLoaded", () => {
-             
             $(".toggle-sidebar").on("click", () => {
                 this.toggleNavbar();
             });
@@ -65,24 +64,26 @@ export class SideNavComponent implements OnInit {
                 $(e.target).parent().parent().siblings().addClass("nav-active");
             });
 
-            $(".nav-item.has-submenu > a.nav-link").on('click', (e: any) => {
+            $(".nav-item.has-submenu > a.nav-link").on("click", (e: any) => {
                 const dropdown = $(e.currentTarget).siblings(".submenu");
-                const currentState = $(dropdown).css('display') == 'none';
+                const currentState = $(dropdown).css("display") == "none";
                 const isHidden = !currentState;
-                const toggleRight = $(e.currentTarget).parent().find(".bi-caret-right-fill");
-                const toggleDown = $(e.currentTarget).parent().find(".bi-caret-down-fill");
+                const toggleRight = $(e.currentTarget)
+                    .parent()
+                    .find(".bi-caret-right-fill");
+                const toggleDown = $(e.currentTarget)
+                    .parent()
+                    .find(".bi-caret-down-fill");
 
-                if(isHidden){
+                if (isHidden) {
                     $(toggleRight).hide();
                     $(toggleDown).show();
-                }else{
+                } else {
                     $(toggleRight).show();
                     $(toggleDown).hide();
                 }
                 $(dropdown).slideToggle("fast");
-
-            })
-
+            });
         });
     }
 }
