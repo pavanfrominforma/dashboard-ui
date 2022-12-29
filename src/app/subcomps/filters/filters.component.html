@@ -1,0 +1,23 @@
+
+<div class="filters d-inline">
+    <app-filter-tags class="mx-1" [filterKVPair]="filter" *ngFor="let filter of filters | keyvalue" 
+      (onFilterRemoved)="removeFilter($event)"></app-filter-tags>
+    <div class="dropdown d-inline mx-1">
+      <button class="btn  btn-primary add-filter bg-primary text-white px-1 p-0 my-0 border-0 rounded-1" data-bs-toggle="dropdown" aria-expanded="false">+</button>
+    
+
+      <ul class="dropdown-menu drop-shadow border-0 ">
+        <li class="position-relative" *ngFor="let column of tableColumns">
+          <button  class="dropdown-item dropdown-menu-main-li">{{column.name}}</button>
+          <ul class="dropdown-menu dropdown-submenu hide drop-shadow bg-white border-0 m-0 position-absolute">
+            <li>
+              <div  class="dropdown-item bg-white m-0 p-0 filters ">
+                <app-filter-controls [controlProps]="column" (onFilterAdded)="applyCurrentFilter($event)"></app-filter-controls>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+      
+</div>
