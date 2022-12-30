@@ -20,7 +20,7 @@ export class FeedsComponent implements OnInit {
     isEditingComment = false;
     commentBoxCtrl: FormControl;
     commentBoxSelectControl: FormControl;
-    selectedPredefinedComment: any = {name: "Select"};
+    selectedPredefinedComment: any = { name: "Select" };
 
     pagination: any = {
         pageNumber: 0,
@@ -36,7 +36,7 @@ export class FeedsComponent implements OnInit {
     feedType: string;
     feedCounts: any[];
     selectedFeedCount: any;
-    isFeedCountLoading: boolean = false;   
+    isFeedCountLoading: boolean = false;
     selectedRecord: any;
 
     // Filter
@@ -74,15 +74,15 @@ export class FeedsComponent implements OnInit {
         this.getPredefinedComments();
     }
 
-    addFilter(filter: any){
+    addFilter(filter: any) {
         const filterKeys = Object.keys(filter);
         filterKeys.forEach((key: any) => {
             this.filters[key] = filter[key];
-        })
+        });
         this.loadFeedsData();
     }
 
-    removeFilter(filterObj: {field: string}){ 
+    removeFilter(filterObj: { field: string }) {
         delete this.filters[filterObj.field];
         this.loadFeedsData();
     }
@@ -92,59 +92,61 @@ export class FeedsComponent implements OnInit {
         this.commentBoxCtrl.reset();
     }
 
-    selectPredefinedComment(comment: any){
-        console.log("Comment is clicked ", this.commentBoxSelectControl)
-        if(typeof comment != 'object' || comment?.NAME == 'Select') {
+    selectPredefinedComment(comment: any) {
+        console.log("Comment is clicked ", this.commentBoxSelectControl);
+        if (typeof comment != "object" || comment?.NAME == "Select") {
             console.log("intog opnject ", comment);
             this.commentBoxCtrl.reset();
-            this.commentBoxCtrl.setValue('');
+            this.commentBoxCtrl.setValue("");
             this.commentBoxCtrl.updateValueAndValidity();
             return;
-        };
-        if(comment.name == 'Others') return;
+        }
+        if (comment.name == "Others") return;
         this.commentBoxCtrl.setValue(comment.NAME);
         this.commentBoxCtrl.updateValueAndValidity();
     }
 
-    getPredefinedComments(){
+    getPredefinedComments() {
         this.apiService.getPredefinedComments().subscribe({
             next: (predefinedComments: any[]) => {
                 this.predefinedComments = predefinedComments;
-            }
-        })
+            },
+        });
     }
 
-    clearCommentBoxSelectors(){
+    clearCommentBoxSelectors() {
         this.isEditingComment = false;
         this.selectedRecord = null;
         this.commentBoxCtrl.reset();
         this.selectPredefinedComment = null;
     }
 
-    saveComment(){
-
+    saveComment() {
         const dataFeedFileId = this.selectedRecord?.DATAFEEDFILEID;
         const dataFeedId = this.selectedRecord?.DATAFEEDID;
         const commentId = this.selectedRecord?.COMMENTID;
         const comment = this.commentBoxCtrl.value;
 
         const payload = {
-            dataFeedFileId, dataFeedId, commentId, comment
-        }
+            dataFeedFileId,
+            dataFeedId,
+            commentId,
+            comment,
+        };
         this.apiService.saveComment(payload).subscribe({
             next: (res: any) => {
                 console.log("Comments saved successfully !");
                 alert(res?.message || "Comment saved successfully!");
                 this.selectedRecord.COMMENTS = comment;
-                $(".comments-icon-"+this.selectedRecord?.DATAFEEDFILEID)
-                    .attr('title', comment)
-                    .attr('data-bs-original-title', comment)
+                $(".comments-icon-" + this.selectedRecord?.DATAFEEDFILEID)
+                    .attr("title", comment)
+                    .attr("data-bs-original-title", comment)
                     .tooltip();
             },
             error: (err: any) => {
                 console.log("ERror is ", err);
                 alert("Error occurred while saving comment!");
-            }
+            },
         });
     }
 
@@ -268,7 +270,7 @@ export class FeedsComponent implements OnInit {
         return data.sort(sortFunction);
     }
 
-    selectComment(comment: any){
+    selectComment(comment: any) {
         this.selectedRecord = comment;
     }
 
@@ -278,7 +280,6 @@ export class FeedsComponent implements OnInit {
             sortOrder == "asc" ? ".up-caret" : ".down-caret";
         $(`.caret.caret-${header}${directionCaretClass}`).addClass("active");
     }
-    
 
     initTooltips() {
         setTimeout(() => {

@@ -36,15 +36,13 @@ export class FiltersComponent implements OnInit, AfterViewInit {
         this.onFilterRemoved.emit(filterObj);
     }
 
-    ngAfterViewInit(): void {
-        
-    }
+    ngAfterViewInit(): void {}
 
-    ngOnChanges(changes: SimpleChanges): void{
+    ngOnChanges(changes: SimpleChanges): void {
         this.initViewDrops();
     }
 
-    initViewDrops(){
+    initViewDrops() {
         setTimeout(() => {
             $(".filters .dropdown-menu .dropdown-menu-main-li").on(
                 "click",
