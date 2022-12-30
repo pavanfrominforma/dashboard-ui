@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Form, FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { ApiService } from "src/app/services/api.service";
-import { getSorterBy, prefixZero } from "src/app/utils/common.utils";
+import { ApiService } from "../../../app/services/api.service";
+import { getSorterBy, prefixZero } from "../../../app/utils/common.utils";
 declare var $: any;
 
 @Component({
