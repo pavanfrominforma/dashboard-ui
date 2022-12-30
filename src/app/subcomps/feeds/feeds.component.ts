@@ -79,10 +79,12 @@ export class FeedsComponent implements OnInit {
         filterKeys.forEach((key: any) => {
             this.filters[key] = filter[key];
         })
+        this.loadFeedsData();
     }
 
     removeFilter(filterObj: {field: string}){ 
         delete this.filters[filterObj.field];
+        this.loadFeedsData();
     }
     reset() {
         this.headers.forEach((header: any) => (header.sortOrder = "desc"));
