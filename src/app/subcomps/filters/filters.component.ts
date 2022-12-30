@@ -5,6 +5,7 @@ import {
     Input,
     Output,
     EventEmitter,
+    SimpleChanges,
 } from "@angular/core";
 import * as $ from "jquery";
 
@@ -36,6 +37,14 @@ export class FiltersComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        
+    }
+
+    ngOnChanges(changes: SimpleChanges): void{
+        this.initViewDrops();
+    }
+
+    initViewDrops(){
         setTimeout(() => {
             $(".filters .dropdown-menu .dropdown-menu-main-li").on(
                 "click",
