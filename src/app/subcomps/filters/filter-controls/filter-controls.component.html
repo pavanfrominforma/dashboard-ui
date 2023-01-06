@@ -1,6 +1,6 @@
 <div class="card bg-white d-block filters-controls m-1">
     <p class="mx-2 text-primary f-14">{{controlProps.name}}</p>
-    <div class="px-4 text-filters" *ngIf="controlProps.datatype == FilterControlType.STRING">
+    <form class="px-4 text-filters" (ngSubmit)="applyFilters()" *ngIf="controlProps.datatype == FilterControlType.STRING">
         <div class="my-2 flex flex-row">
             <input type="radio" class="mx-1" checked> 
             <span class="my-1">Contains</span>
@@ -8,10 +8,10 @@
         <input type="text" class="form-control input-new fs-12" 
             [formControl]="textInput" placeholder="Enter search string here"> <br>
    
-    </div>
+    </form>
 
     
-    <form class="mt-1 boolean-filters"  [formGroup]="booleanFormGroup" 
+    <form class="mt-1 boolean-filters" (ngSubmit)="applyFilters()" [formGroup]="booleanFormGroup" 
         *ngIf="controlProps.datatype == FilterControlType.BOOLEAN">
         <div (click)="rbt.checked=true" class="mx-1 cursor-pointer my-2">
             <input type="radio" #rbt class="ms-2" name="boolean-control" 
@@ -26,15 +26,30 @@
             <label for="rbf my-1 cursor-pointer">False</label>
         </div>
     </form>
+<!-- 
+    <form class="px-4 mb-4" (ngSubmit)="applyFilters()"> 
+        <div class="my-2 flex flex-row">
+            <input type="radio" class="mx-1" name="d" checked value="="> 
+            <span class="my-1">Equals</span>
+            <input type="radio" class="mx-1" name="d" value=">"> 
+            <span class="my-1">Greater than</span>
+            <input type="radio" class="mx-1" name="d" value=">"> 
+            <span class="my-1">Less than</span>
+        </div>
+        <label for=""></label>
+        <input type="number" [formControl]="numberInput" name="form-control input-new fs-12 mt-1" >
+    </form> -->
 
-    <div class="date-filters px-4 mb-4" *ngIf="controlProps.datatype == FilterControlType.DATE">
+    <form class="date-filters px-4 mb-4" (ngSubmit)="applyFilters()"
+         *ngIf="controlProps.datatype == FilterControlType.DATE">
         <label for="">From</label> 
         <input type="date" class="form-control input-new date-control mt-1" 
             [formControl]="startDateInput" id="date-range-start"> <br>
         <label for="" class="mt-1">To</label>
         <input type="date" class="form-control input-new date-control mt-1" 
             [formControl]="endDateInput" id="date-range-end"> 
-    </div>
+    </form>
+    
     <div class="buttons mt-1 d-flex justify-content-end mx-2">
         <button class="btn btn-secondary btn-sm" (click)="cancel()" >Cancel</button>
         <button class="btn btn-primary btn-sm ms-2" (click)="applyFilters()">Save</button>     
