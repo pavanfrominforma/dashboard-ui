@@ -1,11 +1,12 @@
 
 <div class="filters d-inline">
-    <app-filter-tags class="mx-1" [filterKVPair]="filter" *ngFor="let filter of filters | keyvalue" 
-      (onFilterRemoved)="removeFilter($event)"></app-filter-tags>
+    <span *ngFor="let filter of filters | keyvalue">
+      <app-filter-tags class="mx-1" [filterKVPair]="filter" *ngIf="filter.key != 'FEEDTYPE'"
+        (onFilterRemoved)="removeFilter($event)"></app-filter-tags>
+     </span>
     <div class="dropdown d-inline mx-1">
-      <button class="btn  btn-primary add-filter bg-primary text-white px-1 p-0 my-0 border-0 rounded-1" data-bs-toggle="dropdown" aria-expanded="false">+</button>
-    
-
+      <button class="btn btn-primary add-filter bg-primary text-white px-1 p-0 my-0 border-0 rounded-1"
+        style="height: 18px; font-size: 12px;" data-bs-toggle="dropdown" aria-expanded="false">+</button>
       <ul class="dropdown-menu drop-shadow border-0 ">
         <li class="position-relative" *ngFor="let column of tableColumns">
           <button  class="dropdown-item dropdown-menu-main-li">{{column.name}}</button>
