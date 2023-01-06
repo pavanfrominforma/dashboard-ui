@@ -1,9 +1,11 @@
-<div class="bg-error d-inline-block rounded-3  filter-tag">
+<div class="bg-error d-inline-block rounded-3  mt-2 filter-tag">
     <span class="ms-2">
-        <span class="filter-key pe-2">{{filterKVPair?.key}}&nbsp;#</span>
-        <span class="filter-value">{{filterKVPair?.value}}</span>    
+        <span class="filter-key pe-1">{{this.key}}&nbsp;#</span>
+        <span class="condition text-orange me-1">{{this.condition}}</span>    
+        <span class="filter-value">{{this.value}}</span>    
     </span>
-    <span class="remove-btn text-danger rounded-1 cursor-pointer px-1" (click)="removeFilter()">
-        <i class="bi bi-x fs-16"></i>
+    <span class="ms-1">
+        <button class="d-inline border-0 remove-btn text-danger bg-inherit
+            rounded-end cursor-pointer px-1"  (click)="removeFilter()"><i class="bi bi-x fs-16"></i></button>
     </span>
 </div>
