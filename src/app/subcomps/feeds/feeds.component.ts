@@ -13,6 +13,7 @@ declare var $: any;
 export class FeedsComponent implements OnInit {
     overallData: any[];
     headers: any[];
+    allHeaders: any[];
     data: any[];
     isLoading = false;
     predefinedComments: any[];
@@ -49,6 +50,7 @@ export class FeedsComponent implements OnInit {
     ) {
         this.overallData = [];
         this.headers = [];
+        this.allHeaders = [];
         this.tableColumns = [];
         this.data = [];
         this.feedCounts = [];
@@ -70,8 +72,17 @@ export class FeedsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.loadFeedsCount();
         this.getPredefinedComments();
+    }
+
+    changeShowingHeaders(event: { column: any, isChecked: boolean }){
+        this.allHeaders.forEach(header => {
+            if(header.field == event.column.field)
+                header.canShow = event.isChecked;
+        });
+        this.headers = this.modifyHeadersPosition(this.allHeaders);
     }
 
     addFilter(filter: any) {
@@ -172,6 +183,8 @@ export class FeedsComponent implements OnInit {
         this.isLoading = true;
         this.apiService.getVdpFeeds(this.filters).subscribe({
             next: (response: any) => {
+                this.allHeaders = response.headers;
+                this.allHeaders.forEach((header) => header.canShow = true);
                 this.headers = this.modifyHeadersPosition(response.headers);
                 const feedStatusHeader = this.headers.filter(
                     (header: any) =>
@@ -253,7 +266,7 @@ export class FeedsComponent implements OnInit {
         }
     }
     modifyHeadersPosition(headers: any[]) {
-        headers = headers.filter((header: any) => header.show);
+        headers = headers.filter((header: any) => header.show && (header?.canShow));
         headers = headers.sort((a: any, b: any) => a.position - b.position);
         return headers;
     }
