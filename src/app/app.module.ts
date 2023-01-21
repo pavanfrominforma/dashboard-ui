@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FiltersComponent } from "./subcomps/filters/filters.component";
 import { FilterControlsComponent } from "./subcomps/filters/filter-controls/filter-controls.component";
 import { FilterTagsComponent } from "./subcomps/filters/filter-tags/filter-tags.component";
+import { TableColumnsComponent } from './subcomps/table-columns/table-columns.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { FilterTagsComponent } from "./subcomps/filters/filter-tags/filter-tags.
         FiltersComponent,
         FilterControlsComponent,
         FilterTagsComponent,
+        TableColumnsComponent,
     ],
     imports: [
         BrowserModule,

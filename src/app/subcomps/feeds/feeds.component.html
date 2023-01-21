@@ -35,8 +35,7 @@
                     <span class="fw-bolder">{{selectedFeedCount?.inactive}}</span>
                   </span>  
                 </span>
-
-                <span class="bg-primary text-white rounded-1 p-1 mx-1 bi bi-funnel-fill"></span>
+                <app-table-columns [columns]="tableColumns" (columnChecked)="changeShowingHeaders($event)"></app-table-columns>
               </div>
             </div>
             <div class="max-width overflow-scroll">
@@ -70,7 +69,9 @@
                       <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
                         <div class="d-flex justify-content-between">
                           <div class="">{{record[header.field]}}</div>
-                          <div class="comment-box comments-icon-{{record?.DATAFEEDFILEID}}" data-bs-toggle="modal"  data-toggle="tooltip" data-placement="left" data-bs-target="#commentModal"
+                          <div class="comment-box comments-icon-{{record?.DATAFEEDFILEID}}" 
+                            data-bs-toggle="modal"  data-toggle="tooltip" 
+                            data-placement="left" data-bs-target="#commentModal"
                             (click)="selectComment(record)" [title]="record?.COMMENTS || ''">
                             <i  class="bi bi-envelope-open-fill cursor-pointer" [ngClass]="{'disable-envelope': !record?.COMMENTS}"></i>
                           </div>
