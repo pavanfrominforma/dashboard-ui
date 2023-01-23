@@ -62,8 +62,9 @@
                 <tbody>
                   <tr *ngFor="let record of data">
                     <td *ngFor="let header of headers" class="min py-2 px-3 sticky-column"
-                    [ngClass]="{'color-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') > -1, 
-                      'color-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') == -1}"
+                    [ngClass]="{'text-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') != -1, 
+                      'text-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('failed') != -1, 
+                      'text-orange':  header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('due') != -1}"
                       [title]="record[header.field]">
                       <span *ngIf="header.field.toLowerCase().indexOf('status') == -1">{{record[header.field]}}</span>
                       <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
