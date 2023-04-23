@@ -14,6 +14,8 @@ import { FiltersComponent } from "./subcomps/filters/filters.component";
 import { FilterControlsComponent } from "./subcomps/filters/filter-controls/filter-controls.component";
 import { FilterTagsComponent } from "./subcomps/filters/filter-tags/filter-tags.component";
 import { TableColumnsComponent } from './subcomps/table-columns/table-columns.component';
+import { PscComponent } from './pages/psc/psc.component';
+import { SanctionsComponent } from './pages/sanctions/sanctions.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,8 @@ import { TableColumnsComponent } from './subcomps/table-columns/table-columns.co
         FilterControlsComponent,
         FilterTagsComponent,
         TableColumnsComponent,
+        PscComponent,
+        SanctionsComponent,
     ],
     imports: [
         BrowserModule,
