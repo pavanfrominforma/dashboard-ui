@@ -33,4 +33,20 @@ export class ApiService {
         const url = `${this.apiUrl}/api/vdp/feeds/comments/predefined`;
         return this.http.get(url, { headers: this.headers });
     }
+
+    getPSCFeeds(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/psc/feeds`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
+
+    getPSCFeedStatusCount(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/psc/feeds/count`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
 }
