@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { MainPageComponent } from "./main-page/main-page.component";
+import { PscComponent } from "./pages/psc/psc.component";
 import { FeedsComponent } from "./subcomps/feeds/feeds.component";
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
                     { path: "feeds/:feedtype", component: FeedsComponent },
                 ],
             },
+            {
+                path: "psc/feeds",
+                component: PscComponent
+            }
         ],
     },
 ];
