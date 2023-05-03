@@ -52,12 +52,25 @@ table tr td.sticky-column:last-child, table tr th.sticky-column:last-child{
     margin-right: 0px;
 }
 
-table tr td.color-danger.sticky-column:last-child{
+
+table tr td.sticky-column:nth-last-child(2), table tr th.sticky-column:nth-last-child(2){
+    position: sticky !important;
+    right: 0 !important;
+    z-index: 2;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-left: 1px solid #e6e6e6;
+    margin-right: 0px;
+}
+
+table tr td.color-danger.sticky-column:last-child,
+table tr td.color-danger.sticky-column:nth-last-child(2){
     color: #f25a5a !important;
     font-weight: bold;
 
 }
-table tr td.color-success.sticky-column:last-child{
+table tr td.color-success.sticky-column:last-child,
+table tr td.color-danger.sticky-column:nth-last-child(2){
     color: #068e04 !important;
     font-weight: bold;
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../app/services/api.service';
 import { getSorterBy, prefixZero } from "../../../app/utils/common.utils";
 
@@ -8,7 +8,7 @@ import { getSorterBy, prefixZero } from "../../../app/utils/common.utils";
   templateUrl: './psc.component.html',
   styleUrls: ['./psc.component.scss']
 })
-export class PscComponent implements OnInit {
+export class PscComponent implements OnInit, AfterViewChecked {
 
   tableColumns: any = [];
   isLoading: Boolean = false;
@@ -93,6 +93,14 @@ export class PscComponent implements OnInit {
             this.isFeedCountLoading = false;
         },
     });
+}
+
+ngAfterViewChecked(): void {
+  let dcols = $(".sticky-column:nth-last-child(1)");
+  let scols = $(".sticky-column:nth-last-child(2)");
+  let lastW = $(dcols).width() + 32;
+  const s = `right: ${lastW}px !important;`
+  $(scols).attr("style", s);
 }
 
   modifyHeadersPosition(headers: any[]) {
