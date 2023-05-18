@@ -49,4 +49,20 @@ export class ApiService {
         const url = `${this.apiUrl}/api/psc/feeds/count`;
         return  this.http.post(url, body, { headers: this.headers });
     }
+
+    getSanctionsFeeds(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/sanctions/feeds`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
+
+    getSanctionsFeedStatusCount(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/sanctions/feeds/count`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
 }
