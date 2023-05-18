@@ -2,7 +2,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { MainPageComponent } from "./main-page/main-page.component";
+// import { LlfinComponent } from "./pages/llfin/llfin.component";
 import { PscComponent } from "./pages/psc/psc.component";
+import { SanctionsComponent } from "./pages/sanctions/sanctions.component";
 import { FeedsComponent } from "./subcomps/feeds/feeds.component";
 
 const routes: Routes = [
@@ -19,7 +21,15 @@ const routes: Routes = [
             {
                 path: "psc/feeds",
                 component: PscComponent
+            },
+            {
+                path: "sanctions/feeds",
+                component: SanctionsComponent
             }
+            // {
+            //     path: "llfin/feeds",
+            //     component: LlfinComponent
+            // }
         ],
     },
 ];

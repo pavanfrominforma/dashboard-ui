@@ -16,6 +16,7 @@ import { FilterTagsComponent } from "./subcomps/filters/filter-tags/filter-tags.
 import { TableColumnsComponent } from './subcomps/table-columns/table-columns.component';
 import { PscComponent } from './pages/psc/psc.component';
 import { SanctionsComponent } from './pages/sanctions/sanctions.component';
+// import { LlfinComponent } from './pages/llfin/llfin.component';
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import { SanctionsComponent } from './pages/sanctions/sanctions.component';
         TableColumnsComponent,
         PscComponent,
         SanctionsComponent,
+        // LlfinComponent,
     ],
     imports: [
         BrowserModule,

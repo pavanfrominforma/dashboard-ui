@@ -1,0 +1,145 @@
+<div class="row mb-2">
+    <h3>Sanctions Feeds</h3>
+</div>
+<!-- <app-feed-counts-slider [dataList]="[selectedFeedCount]" [loading]="isFeedCountLoading"></app-feed-counts-slider> -->
+<app-filters [columns]= "tableColumns" [filters]="filters" 
+  (onFilterAdded)="addFilter($event)" 
+  (onFilterRemoved)="removeFilter($event)"></app-filters>
+<div class="row">
+
+    <div class="col-12 mt-2">
+        <div class="px-3 py-3 bg-white drop-shadow">
+            <div class="d-flex justify-content-between align-content-center ">
+              <div class="my-2 fs-5 d-flex">
+                <div class="mx-1">
+                  <!-- {{feedType}} feed -->
+                </div> 
+                <!-- <span class="divider text-light2 mx-2">|</span> -->
+                <div class="statuses align-self-center bg-light2 rounded-2 py-1 mx-1">
+                </div>
+                
+              </div>
+              <div class="my-2 statuses align-self-center">
+                <span class="">VSL Status</span>
+                <span class="bg-light2 rounded-2 py-1 mx-1">
+                  <span class="mx-1 text-success p-1 px-1 rounded">
+                    Active <span class="fw-bolder">{{selectedFeedCount?.vslStatus?.active}}</span>
+                  </span>
+                  <span class="divider text-light2 mx-1">|</span>
+                 
+                  <span class="mx-1 text-danger p-1 px-1 rounded">
+                    Failed 
+                    <span class="fw-bolder">{{selectedFeedCount?.vslStatus?.inactive}}</span>
+                  </span>  
+                </span>
+                <span  class="ps-4">PSN Status</span>
+                <span class="bg-light2 rounded-2 py-1 mx-1">
+                  <span class="mx-1 text-success p-1 px-1 rounded">
+                    Active <span class="fw-bolder">{{selectedFeedCount?.psnStatus?.active}}</span>
+                  </span>
+                  <span class="divider text-light2 mx-1">|</span>
+                 
+                  <span class="mx-1 text-danger p-1 px-1 rounded">
+                    Failed 
+                    <span class="fw-bolder">{{selectedFeedCount?.psnStatus?.inactive}}</span>
+                  </span>  
+                </span>
+                <span class="ps-4">COM Status</span>
+                <span class="bg-light2 rounded-2 py-1 mx-1">
+                  <span class="mx-1 text-success p-1 px-1 rounded">
+                    Active <span class="fw-bolder">{{selectedFeedCount?.comStatus?.active}}</span>
+                  </span>
+                  <span class="divider text-light2 mx-1">|</span>
+                 
+                  <span class="mx-1 text-danger p-1 px-1 rounded">
+                    Failed 
+                    <span class="fw-bolder">{{selectedFeedCount?.comStatus?.inactive}}</span>
+                  </span>  
+                </span>
+                <app-table-columns [columns]="tableColumns" (columnChecked)="changeShowingHeaders($event)"></app-table-columns>
+              </div>
+            </div>
+            <div class="max-width overflow-scroll">
+            <div class="d-flex flex-row py-4 justify-content-center" *ngIf="isLoading">
+              <div class="spinner-border text-secondary" role="status" style="display: block">
+              </div>  
+            </div>
+            
+            <table class="table table-striped" *ngIf="!isLoading">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let header of headers" class="min sticky-column py-3 px-3">
+                      <div class="d-flex flex-row justify-content-between">
+                        <div>{{header.name}}</div> &nbsp;&nbsp;
+                        <div class="sorter-arrow d-flex flex-column" (click)="data = sortBy(header, data)">
+                          <i class="bi bi-caret-up-fill caret up-caret caret-{{header.field}}"></i>
+                          <i class="bi bi-caret-down-fill caret down-caret caret-{{header.field}}"></i>
+                        </div>
+                      </div>
+                    </th>
+                  </tr> 
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let record of data">
+                    <td *ngFor="let header of headers" class="min py-2 px-3 sticky-column"
+                    [ngClass]="{'text-success': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('active') != -1, 
+                      'text-danger': header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('failed') != -1, 
+                      'text-orange':  header.field.toLowerCase().indexOf('status') > -1 && record[header.field].toLowerCase().indexOf('due') != -1}"
+                      [title]="record[header.field]">
+                      <span *ngIf="header.field.toLowerCase().indexOf('status') == -1">{{record[header.field]}}</span>
+                      <span *ngIf="header.field.toLowerCase().indexOf('status') > -1">
+                        <div class="d-flex justify-content-between">
+                          <div class="">{{record[header.field]}}</div>
+                          <div class="comment-box comments-icon-{{record?.DATAFEEDFILEID}}" [hidden]="true"
+                            data-bs-toggle="modal"  data-toggle="tooltip" 
+                            data-placement="left" data-bs-target="#commentModal"
+                            (click)="selectComment(record)" [title]="record?.COMMENTS || ''">
+                            <i  class="bi bi-envelope-open-fill cursor-pointer" [ngClass]="{'disable-envelope': !record?.COMMENTS}"></i>
+                          </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+                <!-- Table body ends -->
+              </table>  
+            </div>  
+        </div>
+    </div>
+</div>
+<div class="mt-3 d-flex  flex-row justify-content-end " *ngIf="pagination.maxRecordsPerPage <= pagination.totalCount && !isLoading">
+    
+  <div class="px-2 mx-2 text-secondary">
+    Records per page 
+    <select #pageRecords (change)="changePageRecords(pageRecords.value)"
+     class="px-2 py-1 mx-1 mt-2 bg-light drop-shadow border-0 rounded " style="outline: none; color: #0d6efd;">
+      <option value="10" >10</option>
+      <option value="20" >20</option>
+      <option value="30" >30</option>
+      <option value="50" >50</option>
+      <option [value]="pagination.totalCount">All</option>
+    </select> &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+    <span class="ml-4"> 
+      Showing 
+      {{pagination.display.start}} - {{pagination.display.end}} of {{pagination.totalCount}}
+    </span>
+  </div>
+  <nav >
+      <ul class="pagination">
+        <li class="page-item drop-shadow" >
+          <a class="page-link" (click)="paginate(pagination.pageNumber - 1)" aria-label="Previous" unselectable="on">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item drop-shadow">
+          <a class="page-link" (click)="paginate(pagination.pageNumber + 1)" aria-label="Next" unselectable="on">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+</div>
+
+
+<!-- Modal For Comments -->
