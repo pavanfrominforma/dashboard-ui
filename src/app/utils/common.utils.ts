@@ -12,7 +12,7 @@ export const stringSorter = (
 ) => {
     const prevValue: string = sortField != null ? prev[sortField] : prev;
     const nextValue: string = sortField != null ? next[sortField] : next;
-    return prevValue.localeCompare(nextValue);
+    return prevValue?.localeCompare(nextValue);
 };
 
 export const numericSorter = (
