@@ -65,4 +65,20 @@ export class ApiService {
         const url = `${this.apiUrl}/api/sanctions/feeds/count`;
         return  this.http.post(url, body, { headers: this.headers });
     }
+
+    getLLFINFeeds(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/llfin/feeds`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
+
+    getLLFINFeedStatusCount(filters = {}){
+        const body = {
+            filter: filters
+        }
+        const url = `${this.apiUrl}/api/llfin/feeds/count`;
+        return  this.http.post(url, body, { headers: this.headers });
+    }
 }
