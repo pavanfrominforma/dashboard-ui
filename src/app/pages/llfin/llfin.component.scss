@@ -1,0 +1,131 @@
+table th {
+    color: #656567;
+    font-weight: 500;
+    
+}
+
+td{
+    color: #263041;
+    width: auto;
+    font-family: 'Noto Sans' !important;
+}
+td, th{
+    text-overflow: ellipsis;
+    max-width: 250px;
+    width: 200px;
+    overflow: hidden;
+    border-right: 1px solid #e6e6e6;
+}
+table tr td.sticky-column:first-child, table tr th.sticky-column:first-child{
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2;
+    background-color: #fff;
+    border-right: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    margin-left: 0px;
+    height: 100% !important;
+    width: 300px;
+    color: #000;
+    
+}
+
+td.min, th.min{
+    white-space: nowrap !important;
+    overflow: ellipsis !important;
+}
+
+table{
+    border-collapse: separate; /* Don't collapse */
+    border-spacing: 0;
+    table-layout: auto;
+    font-size: 14px !important;
+}
+
+table tr td.sticky-column:last-child, table tr th.sticky-column:last-child{
+    position: sticky !important;
+    right: 0 !important;
+    z-index: 2;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-left: 1px solid #e6e6e6;
+    margin-right: 0px;
+}
+
+table tr td.color-danger.sticky-column:last-child,
+table tr td.color-danger.sticky-column:nth-last-child(2) {
+    color: #f25a5a !important;
+    font-weight: bold;
+
+}
+table tr td.color-success.sticky-column:last-child,
+table tr td.color-success.sticky-column:nth-last-child(2) {
+    color: #068e04 !important;
+    font-weight: bold;
+}
+
+
+table tr td.sticky-column:nth-last-child(2), table tr th.sticky-column:nth-last-child(2){
+    position: sticky !important;
+    right: 0 !important;
+    z-index: 2;
+    background-color: #fff;
+    box-sizing: border-box;
+    border-left: 1px solid #e6e6e6;
+    margin-right: 0px;
+}
+
+.overflow-scroll{
+    overflow: auto !important;
+}
+
+.max-width{
+    max-width: 100%;
+    position: relative;
+}
+
+.pagination span{
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.comment-box{
+    margin-left: 15px;
+    color: #169eff !important;
+}
+
+.sorter-arrow{
+    color: rgb(172, 171, 171);
+    cursor: pointer;
+    position: relative;
+}
+
+.caret{
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.sorter-arrow .caret.active{
+    color: #000 !important;
+}
+
+.up-caret{
+    position: absolute;
+    top: -3px;
+}
+.down-caret{
+    position: absolute;
+    top: 5px !important;
+}
+
+.statuses{
+    color: rgb(156, 156, 156);
+    font-size: 14px;
+}
+
+.disable-envelope{
+    color: #9fd7ff;
+}
