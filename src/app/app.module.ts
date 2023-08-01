@@ -17,6 +17,7 @@ import { TableColumnsComponent } from './subcomps/table-columns/table-columns.co
 import { PscComponent } from './pages/psc/psc.component';
 import { SanctionsComponent } from './pages/sanctions/sanctions.component';
 import { LlfinComponent } from './pages/llfin/llfin.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { LlfinComponent } from './pages/llfin/llfin.component';
         PscComponent,
         SanctionsComponent,
         LlfinComponent,
+        DashboardComponent,
     ],
     imports: [
         BrowserModule,

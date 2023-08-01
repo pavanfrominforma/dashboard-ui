@@ -6,7 +6,6 @@ import { LlfinComponent } from "./pages/llfin/llfin.component";
 import { PscComponent } from "./pages/psc/psc.component";
 import { SanctionsComponent } from "./pages/sanctions/sanctions.component";
 import { FeedsComponent } from "./subcomps/feeds/feeds.component";
-import { CallingsLoaderComponent } from "./pages/callings-loader/callings-loader.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 
 const routes: Routes = [
@@ -41,10 +40,6 @@ const routes: Routes = [
             {
                 path: "llfin/feeds",
                 component: LlfinComponent
-            },
-            {
-                path: "callings-loader/feeds",
-                component: CallingsLoaderComponent
             }
         ],
     },
